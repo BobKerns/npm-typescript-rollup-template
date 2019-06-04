@@ -5,8 +5,6 @@
   "main": "lib/index.cjs.js",
   "module": "lib/index.esm.mjs",
   "scripts": {
-    "build:config": "tsc --project config/tsconfig.json",
-    "prebuild:devtools": "npm run build:config",
     "build:devtools": "tsc --project devtools/tsconfig.json",
     "pretest": "npm run build",
     "test": "jest",

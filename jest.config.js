@@ -1,4 +1,14 @@
 // Allows using typescript for configuration.
 // Edit devtools/top-jest.config.js
 
-module.exports = require('./config/lib/top-jest.config.js').default;
+const config = {
+    preset: 'ts-jest',
+        testEnvironment: 'node',
+        testMatch: [
+        "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
+        "!**/*.d.ts?(x)",
+        "!**/suite-*.*"
+    ]
+};
+
+module.exports = config;
