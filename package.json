@@ -10,7 +10,7 @@
     "test": "jest",
     "prebuild": "npm run build:devtools",
     "build": "rollup -c",
-    "clean": "rm -rf .rpt2_cache build lib devtools/build devtools/lib config/build config/lib",
+    "clean": "rm -rf .rpt2_cache build lib devtools/build devtools/lib",
     "prepublishOnly": "npm run clean && NODE_ENV=production npm run build"
   },
   "bin": {
@@ -39,9 +39,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.13",
-    "@types/ramda": "^0.26.9",
     "jest": "^24.8.0",
-    "ramda": "^0.26.1",
     "rollup": "^1.12.3",
     "rollup-plugin-terser": "^5.0.0",
     "rollup-plugin-typescript2": "^0.21.1",
