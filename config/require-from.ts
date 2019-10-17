@@ -19,15 +19,15 @@ const DBG =( process.env.DEBUG_REQUIRE_FROM) ? (...args: any[]) => console.log(.
 export function requireFrom(parent: Module, srcDir: string, implDir: string) {
     const pdir = path.dirname(path.resolve(parent ? parent.filename || '.' : '.'));
     srcDir = path.resolve(pdir, srcDir);
-    const implDir2 = path.resolve(pdir, implDir);
+    implDir = path.resolve(pdir, implDir);
     return (oid: string) => {
         oid = oid.replace(/(?:\.js)?$/, '.js');
         oid = path.relative(srcDir, oid);
         const id = path.resolve(srcDir, oid);
-        const codeFile = path.resolve(implDir2, oid);
+        const codeFile = path.resolve(implDir, oid);
         const childModule = new Module(id, parent);
-        childModule.paths = [implDir2, srcDir, ...(parent ? parent.paths : [])];
-        DBG("RES", oid, id, codeFile, srcDir, implDir2);
+        childModule.paths = [implDir, srcDir, ...(parent ? parent.paths : [])];
+        DBG("RES", oid, id, codeFile, srcDir, implDir);
 
         const nrequire = (p: string) => {
             if (!p.startsWith('.')) {
@@ -35,16 +35,11 @@ export function requireFrom(parent: Module, srcDir: string, implDir: string) {
                 return parent.require(p);
             }
             const apath = path.resolve(srcDir, p);
-            if (p.startsWith('..')) {
-                const prelpath = './'+ path.relative(pdir, apath);
-                DBG("Parent require:", p, prelpath);
-                return parent.require(prelpath);
-            }
-            const relpath = path.relative(srcDir, apath);
+            const relpath = path.relative(__dirname, apath);
             const result = EXTS.reduce((prev: any | Error | null, ext: string) => {
                 if (prev === null || prev instanceof Error) {
                     try {
-                        const rpath = path.join(implDir2, `${relpath}${ext}`);
+                        const rpath = require.resolve(`./${relpath}${ext}`);
                         DBG("RPATH", p, ext, apath, __dirname, relpath, rpath);
                         return parent.require(rpath);
                     } catch (e) {
