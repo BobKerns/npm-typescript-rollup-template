@@ -7,6 +7,8 @@ export default {
   testEnvironment: 'node',
   testMatch: [
     "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
+      "!**/lib/**",
+      "!**/build/**",
       "!**/*.d.ts?(x)",
       "!**/suite-*.*"
   ]

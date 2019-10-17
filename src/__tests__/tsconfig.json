@@ -7,7 +7,7 @@
   "references": [
     {"path": "../tsconfig.json"}
   ],
-
+  
   "compilerOptions": {
     "tsBuildInfoFile": "../../build/.tsbuild-info-src-tests",
     // Project layout. Changes not recommended.
