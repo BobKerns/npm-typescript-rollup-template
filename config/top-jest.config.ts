@@ -5,12 +5,9 @@
 export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
-      testMatch: [
-          "src/__tests__/hello-world.ts",
-          "<rootDir>/src/__tests__/hello-world.ts",
+  testMatch: [
     "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
       "!**/*.d.ts?(x)",
-      "!**/suite-*.*",
-      "!**/build/**"
+      "!**/suite-*.*"
   ]
 };
