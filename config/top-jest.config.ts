@@ -7,6 +7,7 @@ export default {
   testEnvironment: 'node',
       testMatch: [
           "src/__tests__/hello-world.ts",
+          "<rootDir>/src/__tests__/hello-world.ts",
     "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
       "!**/*.d.ts?(x)",
       "!**/suite-*.*",
