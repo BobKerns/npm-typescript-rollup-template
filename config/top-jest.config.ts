@@ -5,6 +5,9 @@
 export default {
   preset: 'ts-jest',
   testEnvironment: 'node',
+    "modulePaths": [
+        "<rootDir>/lib"
+    ],
   testMatch: [
     "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
       "!**/lib/**",
