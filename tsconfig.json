@@ -24,7 +24,7 @@
     // "composite": true,                     /* Enable project compilation */
     "incremental": true,
     /* Enable incremental compilation */
-    "tsBuildInfoFile": "./build/.tsbuild-info",
+    // "tsBuildInfoFile": "./build/.tsbuild-info",
     /* Specify file to store incremental compilation information */
     // "removeComments": true,                /* Do not emit comments to output. */
     // "noEmit": true,                        /* Do not emit outputs. */
