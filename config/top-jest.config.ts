@@ -14,8 +14,9 @@ export default {
         "<rootDir>/build/src"
     ],
     testMatch: [
-        "**/__tests__/**.ts",
-        "!**/node_modules/**",
+        "**/__tests__/**.{ts,tsx,js,jsx,mjs}",
+        "!**/*.d.ts?(x)",
+        "!**/{node_modules,lib,build,docs,tmp}/**",
         "!**/suite-*",
         "!**/index*"
     ],
