@@ -4,15 +4,6 @@
 
 export default {
     preset: 'ts-jest',
-    globals: {
-      "ts-jest": {
-          "tsConfig": "src/__tests__/tsconfig.json",
-      }
-    },
-    "modulePaths": [
-        "<rootDir>/lib",
-        "<rootDir>/build/src"
-    ],
     testMatch: [
         "<rootDir>/**/__tests__/**.{ts,tsx,js,jsx,mjs}",
         "!**/*.d.ts?(x)",
