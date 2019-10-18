@@ -1,8 +1,10 @@
 {
   // Inherit the project settings.
   "extends": "../tsconfig",
-  "include": ["*.ts", ",**/*.ts"],
-  "exclude": ["__tests__/**"],
+  "include": [
+    "index.ts"
+  ],
+  "exclude": [],
 
   "compilerOptions": {
     // "composite": true
