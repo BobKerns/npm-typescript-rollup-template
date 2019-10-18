@@ -5,7 +5,7 @@
   "exclude": ["__tests__/**"],
 
   "compilerOptions": {
-    "composite": true
+    // "composite": true
     // "tsBuildInfoFile": "../build/.tsbuild-info-src"
     // Project layout. Changes not recommended.
     //"outDir":"../lib",
