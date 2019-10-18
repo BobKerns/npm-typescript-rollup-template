@@ -14,11 +14,14 @@ export default {
         "<rootDir>/build/src"
     ],
     testMatch: [
-        "**/__tests__/**.{ts,tsx,js,jsx,mjs}",
+        "<rootDir>/**/__tests__/**.{ts,tsx,js,jsx,mjs}",
         "!**/*.d.ts?(x)",
-        "!**/{node_modules,lib,build,docs,tmp}/**",
-        "!**/suite-*",
-        "!**/index*"
+        "!**/suite-*.ts",
+        "!**/index*.*",
+        // <rootDir> is not substituted unless at beginning, e.g. not in negated patterns!
+        // This doesn't matter for terminal patterns, but for intermediate directories, we
+        // need to use /src/ to ensure we only match below a /src/ directory (presumably ours).
+        "!/src/**/{node_modules,lib,build,docs,tmp}/**"
     ],
     rootDir: "src"
 };
