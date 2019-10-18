@@ -13,13 +13,11 @@ export default {
         "<rootDir>/lib",
         "<rootDir>/build/src"
     ],
-  testMatch: [
-    "**/__tests__/*.{ts,tsx,js,jsx,mjs}",
-      "!**/src/*.{ts,tsx,js,jsx,mjs}",
-      "!**/node_modules/**",
-      "!**/lib/**",
-      "!**/build/**",
-      "!**/*.d.ts?(x)",
-      "!**/suite-*.*"
-  ]
+    testMatch: [
+        "**/__tests__/**.ts",
+        "!**/node_modules/**",
+        "!**/suite-*",
+        "!**/index*"
+    ],
+    rootDir: "src"
 };
