@@ -1,8 +1,12 @@
 {
   // Inherit the project settings.
   "extends": "../tsconfig.json",
-  "include": ["*.ts", "**/*.ts"],
-  "exclude": [],
+  "files": [
+    "error-handling.ts",
+    "hello-world.ts"
+  ],
+  "include": ["*.ts"],
+  "exclude": ["node_modules"],
 
   "references": [
     // {"path": "../tsconfig.json"}
