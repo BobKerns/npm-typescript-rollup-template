@@ -36,6 +36,12 @@ After creating a project with this as a template, you can add this repository as
 git remote add template https://github.com/BobKerns/npm-typescript-rollup-template.git
 ```
 
+Then you can merge in template updates with:
+
+```bash
+git pull template main
+```
+
 ## Content
 
 ### Primary organization
