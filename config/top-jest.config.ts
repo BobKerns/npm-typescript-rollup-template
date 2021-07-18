@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019. Licensed under MIT license.
+ * Copyright © 2021 by Bob Kerns. Licensed under MIT license.
  */
 
 // noinspection JSUnusedGlobalSymbols

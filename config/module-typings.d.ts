@@ -1,6 +1,6 @@
 /*
- * @module physics-math
- * Copyright 2020 by Bob Kerns. Licensed under MIT license.
+ * @module Module Typings
+ * Copyright 2021 by Bob Kerns. Licensed under MIT license.
  *
  * Github: https://github.com/BobKerns/physics-math
  */
