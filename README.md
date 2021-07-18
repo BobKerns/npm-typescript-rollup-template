@@ -30,6 +30,12 @@ it makes it easier to understand and to know how you wish to deviate.
   * The usual fallback for script-based template configuration is to manually figure out and make the changes.
   * [Continuous Integration Integration](#continuous-integration-integration)
 
+After creating a project with this as a template, you can add this repository as a remote to facilitate merging updates.
+
+```bash
+git remote add template https://github.com/BobKerns/npm-typescript-rollup-template.git
+```
+
 ## Content
 
 ### Primary organization
