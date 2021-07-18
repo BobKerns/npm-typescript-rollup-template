@@ -14,7 +14,6 @@ import {terser} from 'rollup-plugin-terser';
 import visualizerNoName, {VisualizerOptions} from 'rollup-plugin-visualizer';
 import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
-import externalGlobals from "rollup-plugin-external-globals";
 import serve from "rollup-plugin-serve";
 
 /**
@@ -110,9 +109,13 @@ const dbg: any = {name: 'dbg'};
  * @param resolved
  */
 const checkExternal = (id: string, from?: string, resolved?: boolean): boolean =>
-    !/gl-matrix|glMatrix/i.test(id) && (resolved
-        ? /node_modules/.test(id)
-        : !/^\./.test(id));
+    {
+        const check = () => !/ramda|.\/src\/index.ts/.test(id) && (resolved
+            ? /node_modules/.test(id)
+            : !/^\./.test(id));
+        // process.stderr.write(`checkExternal(${id}, ${from}, ${resolved}) => ${check()}\n`);
+        return check();
+    }
 
 const options: RollupOptions = {
     input:'./src/index.ts',
@@ -126,7 +129,6 @@ const options: RollupOptions = {
         typescript({
              tsconfig: 'src/tsconfig.json',
              include: "*.ts",
-             objectHashIgnoreUnknownHack: true,
              verbosity: 1,
              cacheRoot: "./build/rts2-cache",
              // false = Put the declaration files into the regular output in lib/
@@ -134,11 +136,6 @@ const options: RollupOptions = {
          }),
         commonjs({
             extensions: [".js", ".ts"]
-        }),
-        externalGlobals({
-            // 'gl-matrix': "glMatrix",
-            //'katex': 'katex',
-            'ramda': 'ramda'
         }),
         ...(!dev && !DISABLE_TERSER) ? [
             terser({
