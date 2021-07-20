@@ -16,6 +16,8 @@ import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
 import serve from "rollup-plugin-serve";
 
+const SERVE_PORT = Number.parseInt(process.env.SERVE_PORT ?? '5555');
+
 /**
  * The visualizer plugin fails to set the plugin name. We wrap it to remedy that.
  * @param opts
@@ -150,9 +152,9 @@ const options: RollupOptions = {
             serve({
                 open: !!serve_doc,
                 verbose: true,
-                port: 5000,
+                port: SERVE_PORT,
                 contentBase: '',
-                openPage: '/docs/api/index.html'
+                openPage: '/build/docs/api/index.html'
             })
         ] : []
     ]
