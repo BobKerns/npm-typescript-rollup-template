@@ -1,5 +1,4 @@
 /*
- * @module NpmRollupTemplate
  * Copyright 2021 by Bob Kerns. Licensed under MIT license.
  *
  * Github: https://github.com/BobKerns/npm-typescript-rollup-template

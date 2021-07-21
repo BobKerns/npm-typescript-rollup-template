@@ -49,7 +49,7 @@ git pull template main
 The important files are the outputs included in the published module, and the sources that
 produce them. The rest are supporting mechanisms.
 
-### package.json
+### <a name='package.json'></a>package.json
 
 This describes the package, it's role in the world,
 
@@ -69,7 +69,9 @@ You should edit package.json, with special attention to these fields:
 Three free Continuous Integration workflows are configured out of the box.  Remove any you
 you do not need, or disable them in the relevant service.
 
-You probably do not need multiple builds on multiple services, but this will let you see each and make a choice. For simple things at least, the features are very similar. It is very useful to be able to build and test on multiple environments in parallel, something each of the services provides.
+You probably do not need multiple builds on multiple services, but this will let you see each and make a choice.
+For simple things at least, the features are very similar. It is very useful to be able to build and test on multiple
+environments in parallel, something each of the services provides.
 
 * [Circle CI](https://circleci.com)
 * [Travis CI](https://travis-ci.com)
@@ -77,7 +79,8 @@ You probably do not need multiple builds on multiple services, but this will let
 
 ## /lib/
 
-This holds the built Javascript files. By default, three versions are built, for compatibility with various module systems. Ultimately, the world is moving toward the ECMAScript module format, but in the meantime,
+This holds the built Javascript files. By default, three versions are built, for compatibility with various module systems.
+Ultimately, the world is moving toward the ECMAScript module format, but in the meantime,
 
 ### /lib/esm
 
@@ -97,7 +100,8 @@ Data files to be used in documentation or runtime in the application.
 
 ### [/config](/config/README.md)
 
-This holds files used to globally configure the project. These are often redirected from the project root, to place them in one place, and to enable the use of typescript rather than javascript.
+This holds files used to globally configure the project. These are often redirected from the project root,
+to place them in one place, and to enable the use of typescript rather than javascript.
 
 ### [/devtools](/devtools/README.md)
 
@@ -130,5 +134,21 @@ This hierarchy contains the project's source code and related tests.
 * .circle-ci/ -- configuration for building automatically on [Circle CI](https://circleci.com)
 * .github/workflows -- configuration for building automatically on GitHub Workflows
 * rollup.config.js -- redirects to [/config/rollup.config.ts](/config/rollup.config.ts)
+
+## Initial Files to edit
+
+Edit these files to customize your project to get started:
+
+* LICENSE
+* [package.json](package.json) See [these fields](#package.json). Run `npm install` after editing.
+* [README.md (this file)](README.md). Replace with a description of your project.
+* [typedoc.json](typedoc.json). Update with your project title for the API documentation.
+* [src/README.md](src/README.md). At least change the project name.
+* [src/index.ts](src/index.ts). Change the copyright, export the public interface from here.
+* [src/__tests__/error-handling.ts](src/_tests_/error-handling-ts). This can be left or deleted. Leaving it
+  will ensure there is at least one test.
+* [src/__tests_/hello-world.ts](src/__tests__/hello-world.ts). Delete this, replace with suitable tests.
+* [config/rollup.config.ts](config/rollup.config.ts). You need to change this if you need to declare globals
+  or to build multiple configurations.
 
 [Continuous Integration Integration]: #continuous-integration-integration
