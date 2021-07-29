@@ -9,14 +9,12 @@
 
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
-import typescript from 'rollup-plugin-typescript2';
 import {terser} from 'rollup-plugin-terser';
 import visualizerNoName, {VisualizerOptions} from 'rollup-plugin-visualizer';
 import {OutputOptions, RollupOptions} from "rollup";
 import {chain as flatMap} from 'ramda';
-import serve from "rollup-plugin-serve";
 
-const SERVE_PORT = Number.parseInt(process.env.SERVE_PORT ?? '5555');
+import {relative} from 'path';
 
 /**
  * The visualizer plugin fails to set the plugin name. We wrap it to remedy that.
@@ -33,13 +31,11 @@ const visualizer = (opts?: Partial<VisualizerOptions>) => {
 const mode = process.env.NODE_ENV;
 // noinspection JSUnusedLocalSymbols
 const dev = mode === 'development';
-const serve_mode = process.env.SERVE && dev;
-const serve_doc = process.env.SERVE_DOC && serve_mode;
 
 /**
- * Avoid non-support of ?. optional chaining.
+ * Disable minification, whether for readability or to avoid compatibility issues.
  */
-const DISABLE_TERSER = true;
+const DISABLE_TERSER = false;
 
 /**
  * A rough description of the contents of [[package.json]].
@@ -54,6 +50,18 @@ interface Package {
 const pkg: Package  = require('../package.json');
 
 /**
+ * Mapping of module names to variable names for UMD modules.
+ */
+const globals: {[k: string]: string} = {
+    // Some default mappings
+    katex: "katex",
+    d3: "d3",
+    "@observablehq/stdlib": "observablehq",
+    "ramda": "ramda",
+    "gl-matrix": "glMatrix"
+};
+
+/**
  * Compute the list of outputs from [[package.json]]'s fields
  * @param p the [[package.json]] declaration
  */
@@ -64,13 +72,7 @@ export const outputs = (p: Package) => flatMap((e: OutputOptions) => (e.file ? [
             name: p.name,
             format: 'umd',
             sourcemap: true,
-            globals: {
-                katex: "katex",
-                d3: "d3",
-                "@observablehq/stdlib": "observablehq"
-                // "ramda": "ramda",
-                // "gl-matrix": "glMatrix"
-            }
+            globals
         },
         {
             format: 'cjs',
@@ -103,6 +105,8 @@ const dbg: any = {name: 'dbg'};
         return null;}
 );
 
+const globalsChecked: {[k:string]: string | false} = {};
+
 /**
  * Check for modules that should be considered external and not bundled directly.
  * By default, we consider those from node_modules to be external,
@@ -112,15 +116,23 @@ const dbg: any = {name: 'dbg'};
  */
 const checkExternal = (id: string, from?: string, resolved?: boolean): boolean =>
     {
-        const check = () => !/ramda|.\/src\/index.ts/.test(id) && (resolved
-            ? /node_modules/.test(id)
+        const isExternal = !/\/build\/src\/index.js/.test(id) && (resolved
+            ? /\/node_modules\//.test(id)
             : !/^\./.test(id));
-        // process.stderr.write(`checkExternal(${id}, ${from}, ${resolved}) => ${check()}\n`);
-        return check();
+        const ext = globals[id] ?? '(missing)';
+        if (globalsChecked[id] === undefined) {
+            if (isExternal) {
+                process.stderr.write(`External: ${id} => as ${ext}\n`);
+            } else {
+                process.stderr.write(`Embedded: ${relative(process.cwd(), id)}\n`);
+            }
+        }
+        globalsChecked[id] = ext;
+        return isExternal;
     }
 
 const options: RollupOptions = {
-    input:'./src/index.ts',
+    input:'./build/src/index.js',
     output: outputs(pkg),
     external: checkExternal,
     plugins: [
@@ -128,14 +140,6 @@ const options: RollupOptions = {
             // Check for these in package.json
             mainFields: mainFields(pkg, ['module', 'main', 'browser'])
         }),
-        typescript({
-             tsconfig: 'src/tsconfig.json',
-             include: "*.ts",
-             verbosity: 1,
-             cacheRoot: "./build/rts2-cache",
-             // false = Put the declaration files into the regular output in lib/
-             useTsconfigDeclarationDir: false
-         }),
         commonjs({
             extensions: [".js", ".ts"]
         }),
@@ -147,16 +151,7 @@ const options: RollupOptions = {
         visualizer({
             filename: "build/build-stats.html",
             title: "Build Stats"
-        }),
-        ...serve_mode ? [
-            serve({
-                open: !!serve_doc,
-                verbose: true,
-                port: SERVE_PORT,
-                contentBase: '',
-                openPage: '/build/docs/api/index.html'
-            })
-        ] : []
+        })
     ]
 };
 

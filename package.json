@@ -1,75 +1,69 @@
 {
-  "name": "npm-typescript-rollup-template",
-  "version": "0.1.0",
-  "description": "Template project for typescript and rollup",
-  "main": "lib/cjs/index.js",
-  "module": "lib/esm/index.js",
-  "browser": "lib/umd/index.js",
-  "jsdelivr": "lib/umd/index.js",
-  "unpkg": "lib/umd/index.js",
-  "types": "lib/esm/index.d.ts",
-  "scripts": {
-    "prebuild:config": "tsc --project config/tsconfig.json",
-    "build:config": "",
-    "prebuild:devtools": "npm run build:config",
-    "build:devtools": "tsc --project devtools/tsconfig.json",
-    "pretest": "tsc --project src/__tests__ && npm run build:config",
-    "test": "jest",
-    "prebuild": "npm run build:devtools",
-    "build": "rollup -c",
-    "postbuild": "npm run build:docs",
-    "watch": "NODE_ENV=development rollup -c --watch",
-    "clean": "rm -rf build lib docs",
-    "prepublishOnly": "NODE_ENV=production npm run build",
-    "prebuild:docs": "npm install",
-    "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --out build/docs/api src/",
-    "preserve": "npm run build:devtools",
-    "serve": "NODE_ENV=development SERVE=true rollup -c",
-    "predocs": "npm run build:config && npm run build:docs",
-    "docs": "NODE_ENV=development SERVE=true SERVE_DOC=true rollup -c",
-    "prewatch": "npm run build:devtools"
-  },
-  "bin": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BobKerns/npm-typescript-rollup-template.git"
-  },
-  "keywords": [
-    "template",
-    "node",
-    "typescript",
-    "rollup"
-  ],
-  "author": "Bob Kerns",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BobKerns/npm-typescript-rollup-template/issues"
-  },
-  "homepage": "https://github.com/BobKerns/npm-typescript-rollup-template#readme",
-  "devDependencies": {
-    "@rollup/plugin-commonjs": "^19.0.2",
-    "@rollup/plugin-node-resolve": "^13.0.4",
-    "@types/jest": "^26.0.24",
-    "jest": "^27.0.6",
-    "jest-mock-proxy": "^3.0.0",
-    "mermaid": "^8.11.1",
-    "rollup": "^2.55.0",
-    "rollup-plugin-external-globals": "^0.6.1",
-    "rollup-plugin-serve": "^1.1.0",
-    "rollup-plugin-terser": "^7.0.2",
-    "rollup-plugin-typescript2": "^0.30.0",
-    "rollup-plugin-visualizer": "^5.5.2",
-    "serve": "^12.0.0",
-    "terser": "^5.7.1",
-    "ts-jest": "^27.0.4",
-    "typedoc": "^0.21.4",
-    "typedoc-plugin-mermaid": "^1.4.0",
-    "typedoc-plugin-npm-externals": "^1.0.0",
-    "typescript": "^4.3.5",
-    "wcsize": "^1.0.0"
-  },
-  "dependencies": {
-    "@types/ramda": "^0.27.44",
-    "ramda": "^0.27.1"
-  }
+    "name": "npm-typescript-rollup-template",
+    "version": "0.1.0",
+    "description": "Template project for typescript and rollup",
+    "main": "lib/cjs/index.js",
+    "module": "lib/esm/index.js",
+    "browser": "lib/umd/index.js",
+    "jsdelivr": "lib/umd/index.js",
+    "unpkg": "lib/umd/index.js",
+    "types": "lib/esm/index.d.ts",
+    "scripts": {
+        "build:compile": "tsc --build config src src/__tests__",
+        "pretest": "npm run build:compile",
+        "test": "jest",
+        "prebuild": "npm run build:compile",
+        "build": "rollup -c",
+        "postbuild": "npm run build:docs",
+        "prewatch": "npm run build:compile",
+        "watch": "NODE_ENV=development rollup -c --watch",
+        "clean": "rm -rf build lib docs",
+        "prepublishOnly": "NODE_ENV=production npm run build",
+        "prebuild:docs": "npm install",
+        "build:docs": "GRAPHVIZ_DOT=\"$(which dot)\" typedoc --out build/docs/api src/",
+        "preserve": "npm run build:compile",
+        "serve": "serve -l 3035 -s",
+        "predocs": "npm run build:compile && npm run build:docs",
+        "docs": "npm run serve"
+    },
+    "bin": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/BobKerns/npm-typescript-rollup-template.git"
+    },
+    "keywords": [
+        "template",
+        "node",
+        "typescript",
+        "rollup"
+    ],
+    "author": "Bob Kerns",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/BobKerns/npm-typescript-rollup-template/issues"
+    },
+    "homepage": "https://github.com/BobKerns/npm-typescript-rollup-template#readme",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^19.0.2",
+        "@rollup/plugin-node-resolve": "^13.0.4",
+        "@types/jest": "^26.0.24",
+        "jest": "^27.0.6",
+        "jest-mock-proxy": "^3.0.0",
+        "mermaid": "^8.11.1",
+        "rollup": "^2.55.0",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-visualizer": "^5.5.2",
+        "serve": "^12.0.0",
+        "terser": "^5.7.1",
+        "ts-jest": "^27.0.4",
+        "typedoc": "^0.21.4",
+        "typedoc-plugin-mermaid": "^1.4.0",
+        "typedoc-plugin-npm-externals": "^1.0.0",
+        "typescript": "^4.3.5",
+        "wcsize": "^1.0.0"
+    },
+    "dependencies": {
+        "@types/ramda": "^0.27.44",
+        "ramda": "^0.27.1"
+    }
 }
