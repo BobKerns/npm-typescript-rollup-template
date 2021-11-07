@@ -15,7 +15,7 @@ describe("Verify handling stack traces correctly.", () => {
            //
            // noinspection ExceptionCaughtLocallyJS
            throw new Error("E"); // This must be line 17.
-       } catch (e) {
+       } catch (e: any) {
            expect(e.message).toBe("E");
            expect(e.stack).toMatch(/[/\\]error-handling.ts[^a-zA-Z0-9]+17/m);
        }
